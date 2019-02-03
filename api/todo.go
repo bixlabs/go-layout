@@ -1,20 +1,27 @@
 package api
 
 import (
+	"fmt"
+	. "github.com/bixlabs/go-layout/todo/structures"
+	. "github.com/bixlabs/go-layout/todo/use_cases"
+	"github.com/caarlos0/env"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	. "github.com/bixlabs/go-layout/todo/use_cases"
-	. "github.com/bixlabs/go-layout/todo/structures"
-	"fmt"
 	"time"
 )
 
 type TodoRestConfigurator struct {
 	handler TodoOperations
+	Port   string       `env:"WEB_SERVER_PORT" envDefault:"3000"`
 }
 
 func NewTodoRestConfigurator(handler TodoOperations) {
-	todoOperations := TodoRestConfigurator{handler}
+	todoRestConfig := TodoRestConfigurator{handler, ""}
+
+	err := env.Parse(&todoRestConfig)
+	if err != nil {
+		fmt.Printf("%+v\n", err)
+	}
 	// Disable Console Color
 	// gin.DisableConsoleColor()
 
@@ -23,15 +30,19 @@ func NewTodoRestConfigurator(handler TodoOperations) {
 	router := gin.Default()
 
 	// Content-Type of "application/json" must be used for this endpoint handler
-	router.POST("/todo", todoOperations.createTodo)
-	router.GET("/todo/:id", todoOperations.readTodo)
+	router.POST("/todo", todoRestConfig.createTodo)
+	router.GET("/todo/:id", todoRestConfig.readTodo)
 	// Content-Type of "application/json" must be used for this endpoint handler
-	router.PUT("/todo", todoOperations.updateTodo)
-	router.DELETE("/todo/:id", todoOperations.deleteTodo)
+	router.PUT("/todo", todoRestConfig.updateTodo)
+	router.DELETE("/todo/:id", todoRestConfig.deleteTodo)
 
 	// By default it serves on :8080 unless a
 	// PORT environment variable was defined.
-	router.Run(":3000")
+	err = router.Run(fmt.Sprintf(":%s", todoRestConfig.Port))
+
+	if err != nil {
+		panic(err)
+	}
 	// router.Run(":3000") for a hard coded port
 }
 
