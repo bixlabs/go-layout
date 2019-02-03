@@ -1,9 +1,9 @@
 package use_cases
 
 import (
-	"testing"
-	. "github.com/franela/goblin"
 	. "github.com/bixlabs/go-layout/todo/structures"
+	. "github.com/franela/goblin"
+	"testing"
 )
 
 func Test(t *testing.T) {
@@ -30,7 +30,6 @@ func Test(t *testing.T) {
 		g.After(func() {
 			operationHandler = nil
 		})
-
 
 		// Passing Tests
 		g.It("Should create a todo ", func() {
