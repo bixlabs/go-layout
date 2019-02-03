@@ -1,11 +1,13 @@
 package api
 
 import (
-	"github.com/gin-gonic/gin"
-	"net/http"
-	. "github.com/bixlabs/go-layout/todo/use_cases"
-	. "github.com/bixlabs/go-layout/todo/structures"
 	"fmt"
+	. "github.com/bixlabs/go-layout/todo/structures"
+	. "github.com/bixlabs/go-layout/todo/use_cases"
+	"github.com/bixlabs/go-layout/tools"
+	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
+	"net/http"
 	"time"
 )
 
@@ -41,7 +43,7 @@ func (config TodoRestConfigurator) createTodo(c *gin.Context) {
 	var todo *Todo
 
 	if err := c.ShouldBind(&request); err == nil {
-		fmt.Printf("%s", request)
+		tools.Log().WithFields(logrus.Fields{"Request": request}).Info("A request object was received")
 		todo = config.handler.Create(TodoPostToBusinessTodo(request))
 		c.String(http.StatusOK, fmt.Sprintf("Create was successful for TODO with name: %s", todo.Name))
 	} else {
