@@ -14,18 +14,17 @@ import (
 
 type todoRestConfigurator struct {
 	handler useCases.TodoOperations
-	Port   string       `env:"WEB_SERVER_PORT" envDefault:"3000"`
+	Port    string `env:"WEB_SERVER_PORT" envDefault:"3000"`
 }
 
 func NewTodoRestConfigurator(handler useCases.TodoOperations) {
 	todoRestConfig := todoRestConfigurator{handler, ""}
 	// Disable Console Color
 	// gin.DisableConsoleColor()
-        err := env.Parse(&todoRestConfig)
+	err := env.Parse(&todoRestConfig)
 	if err != nil {
 		fmt.Printf("%+v\n", err)
 	}
-
 
 	// Creates a gin router with default middleware:
 	// logger and recovery (crash-free) middleware
