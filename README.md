@@ -39,6 +39,10 @@
     * `chmod +x ~/.air`
 * To run the project with hot reload: `$ make run-dev` or `~/.air -c .air.config`
 
+## How to run the linter
+* For the linter we are using [golangci-lint](https://github.com/golangci/golangci-lint)
+* To run it you can either use `make lint` or `golangci-lint run`.
+
 ## Logging framework
 * We are using [Logrus](https://github.com/sirupsen/logrus) as a logging framework
 * This is how we initialize the logger [here](./tools/logger.go), specifically `InitializeLogger`
@@ -56,8 +60,8 @@
 * Run:
     * Without executable: `$ make run` or `$ go run <path_of_main_file_relative_to_root>`
     * With executable:
-        * Make the file executable: `$ chmod +x <path_to_executable_relative_to_root>
-        * Run it: `$ <path_to_executable_relative_to_root>
+        * Make the file executable: `$ chmod +x <path_to_executable_relative_to_root>`
+        * Run it: `$ <path_to_executable_relative_to_root>`
 
 # Standard Go Project Layout
 
