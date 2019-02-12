@@ -37,7 +37,7 @@ func NewTodoRestConfigurator(handler useCases.TodoOperations) {
 	router.PUT("/todo", todoRestConfig.updateTodo)
 	router.DELETE("/todo/:id", todoRestConfig.deleteTodo)
 
-	// By default it serves on :8080 unless a
+	// By default it serves on :3000 unless a
 	// PORT environment variable was defined.
 	err = router.Run(fmt.Sprintf(":%s", todoRestConfig.Port))
 
