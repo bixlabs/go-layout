@@ -1,11 +1,11 @@
 package useCases
 
 import (
+	. "github.com/bixlabs/go-layout/todo/structures"
 	"github.com/bixlabs/go-layout/tools"
+	. "github.com/franela/goblin"
 	"github.com/sirupsen/logrus"
 	"testing"
-	. "github.com/franela/goblin"
-	. "github.com/bixlabs/go-layout/todo/structures"
 )
 
 func Test(t *testing.T) {

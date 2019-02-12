@@ -1,13 +1,13 @@
 package api
 
 import (
+	"fmt"
+	"github.com/bixlabs/go-layout/todo/structures"
+	"github.com/bixlabs/go-layout/todo/useCases"
+	"github.com/bixlabs/go-layout/tools"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
-	"github.com/bixlabs/go-layout/tools"
 	"net/http"
-	"github.com/bixlabs/go-layout/todo/useCases"
-	"github.com/bixlabs/go-layout/todo/structures"
-	"fmt"
 	"time"
 )
 
@@ -40,7 +40,6 @@ func NewTodoRestConfigurator(handler useCases.TodoOperations) {
 	}
 	// router.Run(":3000") for a hard coded port
 }
-
 
 func (config todoRestConfigurator) createTodo(c *gin.Context) {
 	var request TodoRequest
