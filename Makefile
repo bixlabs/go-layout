@@ -14,6 +14,9 @@ build:
 clean:
 		rm -r -f ./tmp
 
+lint:
+		golangci-lint run
+
 run-dev:
 		make format && ~/.air -c .air.config
 
@@ -23,4 +26,5 @@ run:
 deps:
 		sh ./scripts/install_dep.sh
 		sh ./scripts/install_air.sh
+		sh ./scripts/install_golangci_lint.sh
 		dep ensure
