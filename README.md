@@ -18,10 +18,10 @@
 * When installing the dependencies for this project you will get gin-gonic for API definition.
 * To run the main for the API application you have to `$ make run` or `$ go run cmd/api/main.go`, this will run an HTTP server in port 8080
 * For testing all the define endpoint you can try out these different CURL commands:
-    * Create: `$ curl -H "Content-type: application/json" -d '{"i_am": "1", "title": "Some Todo Title", "the_rest": "description", "when_finish": "2018-12-06T14:26:40.623Z"}' "http://localhost:8080/todo"`
-    * Read: `$ curl -X GET "http://localhost:8080/todo/1"`
-    * Update: `$ curl -X PUT -H "Content-type: application/json" -d '{"i_am": "1", "title": "Some Todo Title", "the_rest": "description", "when_finish": "2018-12-06T14:26:40.623Z"}' "http://localhost:8080/todo"`
-    * Delete: `$ curl -X DELETE "http://localhost:8080/todo/1"`
+    * Create: `$ curl -H "Content-type: application/json" -d '{"i_am": "1", "title": "Some Todo Title", "the_rest": "description", "when_finish": "2018-12-06T14:26:40.623Z"}' "http://localhost:3000/todo"`
+    * Read: `$ curl -X GET "http://localhost:3000/todo/1"`
+    * Update: `$ curl -X PUT -H "Content-type: application/json" -d '{"i_am": "1", "title": "Some Todo Title", "the_rest": "description", "when_finish": "2018-12-06T14:26:40.623Z"}' "http://localhost:3000/todo"`
+    * Delete: `$ curl -X DELETE "http://localhost:3000/todo/1"`
 
 ## How to make build of a main.go file and run it.
 * `$ make build` or `$ go build -o ./tmp/web-server ./cmd/api/main.go`
@@ -39,13 +39,28 @@
     * `chmod +x ~/.air`
 * To run the project with hot reload: `$ make run-dev` or `~/.air -c .air.config`
 
+## How to run format
+* We use `go vet` and `go fmt` for simple linter and formatting, running `make format` will do.
+* This commands are run also when we run the project, you can check the [Makefile](./Makefile) to know exactly in which commands is used.
+
+## How to run the linter
+* For the linter we are using [golangci-lint](https://github.com/golangci/golangci-lint)
+* To run it you can either use `make lint` or `golangci-lint run`.
+
+## Logging framework
+* We are using [Logrus](https://github.com/sirupsen/logrus) as a logging framework
+* This is how we initialize the logger [here](./tools/logger.go), specifically `InitializeLogger`
+* We have to run `InitializeLogger` before using the `Log` function, [here's an example](./cmd/api/main.go)
+* Finally [examples of using the logger](./todo/use_cases/todo_handler.go)
+* visit their website for advance information on how to use it.
+* When using `make run-dev` we won't see the colors of the log message, with `make run` we will.
+
 ## How to handle environment variables
 * For environment variables we use the same `.env` mechanism that we all know, for more information here's the [library](https://github.com/joho/godotenv)
 * You can either use the mechanism to read the environment variables from the `.env` file that's explain in the library above OR use this one in this [other library](https://github.com/caarlos0/env)
 * [Here's how we load](./cmd/api/main.go#L6) the `.env` file
 * For an example you can check [here](./api/todo.go#L15), we are using the second library method which let us use tags in structs. Then we _load_ the struct with the values like [this](./api/todo.go#L21)
 * For testing this you can create a `.env` file with a different port than the default, you will see how the web server is initialize in the port you specified in the `.env`, you can just change the name of `.env-template` to `.env` and that will do the trick.
-
 
 ## How to run the tests
 * After you install everything with dep you should be able to do `$ make test` or `$ go test -cover -v ./...` this will run all the test files in the project.

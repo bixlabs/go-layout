@@ -1,14 +1,19 @@
-package use_cases
+package useCases
 
 import (
-	"testing"
-	. "github.com/franela/goblin"
 	. "github.com/bixlabs/go-layout/todo/structures"
+	"github.com/bixlabs/go-layout/tools"
+	. "github.com/franela/goblin"
+	"github.com/sirupsen/logrus"
+	"testing"
 )
 
 func Test(t *testing.T) {
 	g := Goblin(t)
 	var operationHandler TodoOperations
+	tools.InitializeLogger()
+	// This line prevents the logs to appear in the tests.
+	tools.Log().Level = logrus.FatalLevel
 	g.Describe("Todo CRUD use cases", func() {
 
 		// Runs at the beginning of all tests
@@ -30,7 +35,6 @@ func Test(t *testing.T) {
 		g.After(func() {
 			operationHandler = nil
 		})
-
 
 		// Passing Tests
 		g.It("Should create a todo ", func() {

@@ -2,11 +2,13 @@ package main
 
 import (
 	"github.com/bixlabs/go-layout/api"
-	"github.com/bixlabs/go-layout/todo/use_cases"
-    _ "github.com/joho/godotenv/autoload"
+	"github.com/bixlabs/go-layout/todo/useCases"
+	"github.com/bixlabs/go-layout/tools"
+        _ "github.com/joho/godotenv/autoload"
 )
 
 func main() {
-	todoOperations := use_cases.NewTodoOperationsHandler()
+	tools.InitializeLogger()
+	todoOperations := useCases.NewTodoOperationsHandler()
 	api.NewTodoRestConfigurator(todoOperations)
 }
