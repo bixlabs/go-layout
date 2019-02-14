@@ -11,11 +11,7 @@
 ```bash
 $ make run
 ```
-or 
 
-```bash
-$ go run cmd/api/main.go
-```
 * this will run an HTTP server in port 3000
 * For testing all the define endpoints you can try out these different CURL commands:
 ```bash
@@ -27,6 +23,10 @@ $ go run cmd/api/main.go
 
 ## How to generate API documentation
 * Initialize the documentation (this will generate a _docs_ folder in the root folder)
+```bash
+$ make api-docs
+```
+or
 ```bash
 $ swag init -g ./api/main.go
 ```

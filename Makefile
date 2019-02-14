@@ -27,7 +27,10 @@ run-dev:
 		make format && air -c .air.config
 
 run:
-		make format && go run api/main.go
+		make api-docs && make format && go run api/main.go
 
 run-cli:
 		make format && go run cmd/cli/main.go
+
+api-docs:
+		swag init -g api/main.go
