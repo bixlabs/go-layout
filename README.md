@@ -2,9 +2,16 @@
 
 * go 1.11 or higher.
 
+## Installation
+
+```bash
+$ make test
+```
+* Running the tests will start downloading all the dependencies needed for the project (the same can be accomplish running or building the project).
+
 ## Go Modules
 * If you need more information about them please go [here](https://github.com/golang/go/wiki/Modules#how-to-define-a-module)
-* To install dependencies just use `go get`
+* To install new dependencies just use `go get`
 
 ## Creating an API through [gin-gonic](https://github.com/gin-gonic/gin)
 
