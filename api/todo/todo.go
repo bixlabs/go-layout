@@ -5,11 +5,8 @@ import (
 	"github.com/bixlabs/go-layout/todo/interactors"
 	"github.com/bixlabs/go-layout/todo/structures"
 	"github.com/bixlabs/go-layout/tools"
-	"github.com/caarlos0/env"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
-	"github.com/swaggo/gin-swagger"
-	"github.com/swaggo/gin-swagger/swaggerFiles"
 	_ "github.com/swaggo/swag/example/celler/httputil"
 	"net/http"
 	"time"
@@ -17,35 +14,17 @@ import (
 
 type todoRestConfigurator struct {
 	handler interactors.TodoOperations
-	Port    string `env:"WEB_SERVER_PORT" envDefault:"3000"`
 }
 
-func NewTodoRestConfigurator(handler interactors.TodoOperations) {
-	todoRestConfig := todoRestConfigurator{handler, ""}
+func NewTodoRestConfigurator(handler interactors.TodoOperations, router *gin.Engine) {
+	configureTodoRoutes(todoRestConfigurator{handler}, router)
+}
 
-	err := env.Parse(&todoRestConfig)
-	if err != nil {
-		fmt.Printf("%+v\n", err)
-	}
-
-	// Creates a gin router with default middleware:
-	// logger and recovery (crash-free) middleware
-	router := gin.Default()
-
-	router.POST("/todo", todoRestConfig.createTodo)
-	router.GET("/todo/:id", todoRestConfig.readTodo)
-	router.PUT("/todo", todoRestConfig.updateTodo)
-	router.DELETE("/todo/:id", todoRestConfig.deleteTodo)
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
-	// By default it serves on :3000 unless a
-	// PORT environment variable was defined.
-	err = router.Run(fmt.Sprintf(":%s", todoRestConfig.Port))
-
-	if err != nil {
-		panic(err)
-	}
-	// router.Run(":3000") for a hard coded port
+func configureTodoRoutes(restConfig todoRestConfigurator, router *gin.Engine) {
+	router.POST("/todo", restConfig.createTodo)
+	router.GET("/todo/:id", restConfig.readTodo)
+	router.PUT("/todo", restConfig.updateTodo)
+	router.DELETE("/todo/:id", restConfig.deleteTodo)
 }
 
 // @Summary Create Todo
@@ -70,7 +49,6 @@ func (config todoRestConfigurator) createTodo(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
-
 }
 
 func (config todoRestConfigurator) readTodo(c *gin.Context) {
