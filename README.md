@@ -1,13 +1,16 @@
 # Requirements
 
 * go 1.11 or higher.
+* Make sure that you activate [Go Modules](https://github.com/golang/go/wiki/Modules#how-to-install-and-activate-module-support)
 
-## Installation
+## Installation, please read this before running anything.
 
 ```bash
-$ make deps
+$ make
 ```
+
 * Through this we install some binaries and all the go libraries that the project needs.
+* We also run the tests and the linter.
 
 ## Go Modules
 * If you need more information about them please go [here](https://github.com/golang/go/wiki/Modules#how-to-define-a-module)
