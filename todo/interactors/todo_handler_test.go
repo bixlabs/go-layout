@@ -4,6 +4,7 @@ import (
 	"github.com/bixlabs/go-layout/todo/structures"
 	"github.com/bixlabs/go-layout/tools"
 	"github.com/franela/goblin"
+	. "github.com/onsi/gomega"
 	"github.com/sirupsen/logrus"
 	"testing"
 )
@@ -14,6 +15,9 @@ func Test(t *testing.T) {
 	tools.InitializeLogger()
 	// This line prevents the logs to appear in the tests.
 	tools.Log().Level = logrus.FatalLevel
+
+	//special hook for gomega
+	RegisterFailHandler(func(m string, _ ...int) { g.Fail(m) })
 	g.Describe("Todo CRUD use cases", func() {
 
 		// Runs at the beginning of all tests
@@ -40,25 +44,25 @@ func Test(t *testing.T) {
 		g.It("Should create a todo ", func() {
 			todo := structures.Todo{ID: "1"}
 			result := operationHandler.Create(todo)
-			g.Assert(todo.ID).Equal(result.ID)
+			Expect(todo.ID).To(Equal(result.ID))
 		})
 
 		g.It("Should read a todo ", func() {
 			id := "1"
 			result := operationHandler.Read("1")
-			g.Assert(id).Equal(result.ID)
+			Expect(id).To(Equal(result.ID))
 		})
 
 		g.It("Should update a todo ", func() {
 			todo := structures.Todo{ID: "1"}
 			result := operationHandler.Update(todo)
-			g.Assert(todo.ID).Equal(result.ID)
+			Expect(todo.ID).To(Equal(result.ID))
 		})
 
 		g.It("Should delete a todo ", func() {
 			id := "1"
 			result := operationHandler.Delete(id)
-			g.Assert(true).Equal(result)
+			Expect(true).To(Equal(result))
 		})
 
 		// Pending Test
@@ -68,7 +72,7 @@ func Test(t *testing.T) {
 		g.Xit("Should delete a todo ", func() {
 			id := "1"
 			result := operationHandler.Delete(id)
-			g.Assert(true).Equal(result)
+			Expect(true).To(Equal(result))
 		})
 
 		// We can use describe inside of other describes
@@ -77,7 +81,7 @@ func Test(t *testing.T) {
 			g.It("Should delete a todo", func() {
 				id := "1"
 				result := operationHandler.Delete(id)
-				g.Assert(true).Equal(result)
+				Expect(true).To(Equal(result))
 			})
 		})
 	})
